@@ -9,6 +9,7 @@ import Register from "../pages/auth/Register";
 import EmployerDashboard from "../pages/employer/Dashboard";
 import JobSeekerDashboard from "../pages/jobseeker/Dashboard";
 import NotFound from "../pages/shared/NotFound";
+import JobDetails from "../pages/shared/JobDetails";
 
 const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/jobs/:id" element={<JobDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
