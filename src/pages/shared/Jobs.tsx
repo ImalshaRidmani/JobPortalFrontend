@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import JobCard from "../../components/jobs/JobCard";
+import JobGrid from "../../components/jobs/JobGrid";
+import JobSkeleton from "../../components/jobs/JobSkeleton";
+import EmptyJobs from "../../components/jobs/EmptyJobs";
 import { getJobs } from "../../services/jobService";
 import type { Job } from "../../types/Job";
 
@@ -8,49 +10,35 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadJobs();
+    fetchJobs();
   }, []);
 
-  const loadJobs = async () => {
+  const fetchJobs = async () => {
     try {
       const data = await getJobs();
       setJobs(data);
     } catch (error) {
-      console.error("Failed to load jobs:", error);
+      console.error("Error loading jobs:", error);
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <p className="text-center text-lg">Loading jobs...</p>;
+    return (
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <JobSkeleton key={i} />
+        ))}
+      </div>
+    );
   }
 
   if (jobs.length === 0) {
-  return (
-    <div className="py-20 text-center">
-      <h2 className="text-2xl font-semibold">No jobs found</h2>
-      <p className="mt-2 text-gray-500">
-        Check back later for new opportunities.
-      </p>
-    </div>
-  );
-}
+    return <EmptyJobs />;
+  }
 
-  return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {jobs.map((job) => (
-        <JobCard
-          key={job.id}
-          title={job.title}
-          company={job.company.name}
-          location={job.location}
-          salary={job.salary}
-          description={job.description}
-        />
-      ))}
-    </div>
-  );
+  return <JobGrid jobs={jobs} />;
 };
 
 export default Jobs;
