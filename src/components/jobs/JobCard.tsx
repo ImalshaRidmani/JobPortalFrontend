@@ -5,7 +5,7 @@ type JobCardProps = {
   company: string;
   location: string;
   salary: number;
-  type?: string;
+  description: string;
   onView?: () => void;
 };
 
@@ -14,7 +14,7 @@ const JobCard = ({
   company,
   location,
   salary,
-  type = "Full Time",
+  description,
   onView,
 }: JobCardProps) => {
   return (
@@ -45,7 +45,7 @@ const JobCard = ({
 
         <div className="flex items-center gap-2">
           <FaBriefcase />
-          <span>{type}</span>
+          <span>{description}</span>
         </div>
 
       </div>
