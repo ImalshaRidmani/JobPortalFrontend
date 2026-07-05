@@ -11,6 +11,7 @@ const JobGrid = ({ jobs }: Props) => {
       {jobs.map((job) => (
         <JobCard
           key={job.id}
+          id={job.id}
           title={job.title}
           company={job.company.name}
           location={job.location}
